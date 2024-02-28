@@ -72,10 +72,10 @@ function getDayName(date) {
  * Date('2024-02-16T00:00:00Z') => Date('2024-02-23T00:00:00Z')
  */
 function getNextFriday(date) {
-  const dayOfTheWeek = date.getUTCDay();
-  const dayNumber = date.getUTCDate();
+  const dayOfTheWeek = date.getDay();
+  const dayNumber = date.getDate();
   const addDays = (12 - dayOfTheWeek) % 7 || 7;
-  const nextFriday = new Date(date.setUTCDate(dayNumber + addDays));
+  const nextFriday = new Date(date.setDate(dayNumber + addDays));
   return nextFriday;
 }
 
@@ -217,8 +217,12 @@ function getWeekNumberByDate(date) {
  * Date(2024, 0, 13) => Date(2024, 8, 13)
  * Date(2023, 1, 1) => Date(2023, 9, 13)
  */
-function getNextFridayThe13th(/* date */) {
-  throw new Error('Not implemented');
+function getNextFridayThe13th(date) {
+  let dateToCheck = getNextFriday(date);
+  while (dateToCheck.getDate() !== 13) {
+    dateToCheck = new Date(dateToCheck.setDate(dateToCheck.getDate() + 7));
+  }
+  return dateToCheck;
 }
 
 /**
